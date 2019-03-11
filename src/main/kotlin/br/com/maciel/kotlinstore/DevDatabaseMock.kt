@@ -1,6 +1,7 @@
 package br.com.maciel.kotlinstore
 
 import br.com.maciel.kotlinstore.controller.model.*
+import br.com.maciel.kotlinstore.controller.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
@@ -56,10 +57,10 @@ class DevDatabaseMock @Autowired constructor(
     fun popularMockItemsPedido(): List<ItemPedido> {
         listaItensPedido.clear()
         //
-        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(1).preco, 2, null, 2))
-        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(0).preco, 2, null, 1))
-        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(3).preco, 4, null, 1))
-        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(2).preco, 4, null, 1))
+        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(1).preco, 2, null, STATUS_ITEM.CANCELADO))
+        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(0).preco, 2, null, STATUS_ITEM.VENDA_NORMAL))
+        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(3).preco, 4, null, STATUS_ITEM.VENDA_NORMAL))
+        listaItensPedido.add(ItemPedido(null, listaProdutos.get(0), listaProdutos.get(2).preco, 4, null, STATUS_ITEM.VENDA_NORMAL))
         //
         return listaItensPedido
     }
