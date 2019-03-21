@@ -4,10 +4,10 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import javax.persistence.*
 
-enum class STATUS_ITEM (val status: Int) {
-        VENDA_NORMAL(1),
-        PROMOCAO(2),
-        CANCELADO(9)
+enum class STATUS_ITEM () {
+        VENDA_NORMAL,
+        PROMOCAO,
+        CANCELADO
 }
 
 @Entity
@@ -15,12 +15,11 @@ data class Categoria (
         @Id @GeneratedValue var categoriaId: Int?,
         var nome: String,
         var descricao: String?)
-
 @Entity
 data class Produto (
         @Id @GeneratedValue var produtoId: Long?,
         @ManyToOne(fetch = FetchType.LAZY, optional = true)
-        @JoinColumn(name = "categoriaId") var categoria: Categoria,
+        @JoinColumn(name = "categoriaId", foreignKey = ForeignKey(name = "categoria_produto_fk")) var categoria: Categoria,
         var nome: String,
         var descricao: String?,
         var preco: BigDecimal,
@@ -30,8 +29,8 @@ data class Produto (
 @Entity
 data class ItemPedido (
         @Id @GeneratedValue var itemId: Long?,
-        @OneToOne(fetch = FetchType.EAGER, optional = false)
-        @JoinColumn(name = "produtoId") var produto:Produto,
+        @OneToOne
+        @JoinColumn(name = "produtoId", foreignKey = ForeignKey(name = "produto_items_pedido_fk")) var produto:Produto,
         var precoVenda: BigDecimal,
         var quantidade: Int,
         var observacao: String? = null,
@@ -41,6 +40,7 @@ data class ItemPedido (
          * ...
          * 9 = Cancelado
          */
+        @Enumerated(EnumType.STRING)
         var status: STATUS_ITEM)
 
 @Entity
